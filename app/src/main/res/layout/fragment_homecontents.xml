@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints">
+
+                <TextView
+                    android:id="@+id/totalLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="#F18989"
+                    android:gravity="center"
+                    android:text="総合計"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/total"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints">
+
+                <TextView
+                    android:id="@+id/expensesLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="#F18989"
+                    android:gravity="center"
+                    android:text="うち非課税交通費"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/totalExpenses"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints">
+
+                <TextView
+                    android:id="@+id/totalIncomeLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="#F18989"
+                    android:gravity="center"
+                    android:text="総収入"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/totalIncome"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints">
+
+                <TextView
+                    android:id="@+id/totalBalanceLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="#F1CE89"
+                    android:gravity="center"
+                    android:text="収入残額"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/totalBalance"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical" />
+
+            </LinearLayout>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="96dp">
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_weight="2"
+                        android:gravity="center_horizontal"
+                        android:text="" />
+
+                    <TextView
+                        android:layout_weight="3"
+                        android:gravity="center_horizontal"
+                        android:text="月給" />
+
+                    <TextView
+                        android:layout_weight="3"
+                        android:gravity="center_horizontal"
+                        android:text="非課税交通費" />
+
+                    <TextView
+                        android:layout_weight="3"
+                        android:gravity="center_horizontal"
+                        android:text="臨時収入" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_weight="2"
+                        android:gravity="center_horizontal"
+                        android:text="1月" />
+
+                    <TextView
+                        android:id="@+id/month1Salary"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+
+                    <TextView
+                        android:id="@+id/month1Expenses"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+
+                    <TextView
+                        android:id="@+id/month1ExtraordinaryIncome"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_weight="2"
+                        android:gravity="center_horizontal"
+                        android:text="2月" />
+
+                    <TextView
+                        android:id="@+id/month2Salary"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+
+                    <TextView
+                        android:id="@+id/month2Expenses"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+
+                    <TextView
+                        android:id="@+id/month2ExtraordinaryIncome"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_weight="2"
+                        android:gravity="center_horizontal"
+                        android:text="3月" />
+
+                    <TextView
+                        android:id="@+id/month3Salary"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+
+                    <TextView
+                        android:id="@+id/month3Expenses"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+
+                    <TextView
+                        android:id="@+id/month3ExtraordinaryIncome"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_weight="2"
+                        android:gravity="center_horizontal"
+                        android:text="4月" />
+
+                    <TextView
+                        android:id="@+id/month4Salary"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+
+                    <TextView
+                        android:id="@+id/month4Expenses"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+
+                    <TextView
+                        android:id="@+id/month4ExtraordinaryIncome"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_weight="2"
+                        android:gravity="center_horizontal"
+                        android:text="5月" />
+
+                    <TextView
+                        android:id="@+id/month5Salary"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+
+                    <TextView
+                        android:id="@+id/month5Expenses"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+
+                    <TextView
+                        android:id="@+id/month5ExtraordinaryIncome"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_weight="2"
+                        android:gravity="center_horizontal"
+                        android:text="6月" />
+
+                    <TextView
+                        android:id="@+id/month6Salary"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+
+                    <TextView
+                        android:id="@+id/month6Expenses"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+
+                    <TextView
+                        android:id="@+id/month6ExtraordinaryIncome"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_weight="2"
+                        android:gravity="center_horizontal"
+                        android:text="7月" />
+
+                    <TextView
+                        android:id="@+id/month7Salary"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+
+                    <TextView
+                        android:id="@+id/month7Expenses"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+
+                    <TextView
+                        android:id="@+id/month7ExtraordinaryIncome"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_weight="2"
+                        android:gravity="center_horizontal"
+                        android:text="8月" />
+
+                    <TextView
+                        android:id="@+id/month8Salary"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+
+                    <TextView
+                        android:id="@+id/month8Expenses"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+
+                    <TextView
+                        android:id="@+id/month8ExtraordinaryIncome"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_weight="2"
+                        android:gravity="center_horizontal"
+                        android:text="9月" />
+
+                    <TextView
+                        android:id="@+id/month9Salary"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+
+                    <TextView
+                        android:id="@+id/month9Expenses"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+
+                    <TextView
+                        android:id="@+id/month9ExtraordinaryIncome"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_weight="2"
+                        android:gravity="center_horizontal"
+                        android:text="10月" />
+
+                    <TextView
+                        android:id="@+id/month10Salary"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+
+                    <TextView
+                        android:id="@+id/month10Expenses"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+
+                    <TextView
+                        android:id="@+id/month10ExtraordinaryIncome"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_weight="2"
+                        android:gravity="center_horizontal"
+                        android:text="11月" />
+
+                    <TextView
+                        android:id="@+id/month11Salary"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+
+                    <TextView
+                        android:id="@+id/month11Expenses"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+
+                    <TextView
+                        android:id="@+id/month11ExtraordinaryIncome"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_weight="2"
+                        android:gravity="center_horizontal"
+                        android:text="12月" />
+
+                    <TextView
+                        android:id="@+id/month12Salary"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+
+                    <TextView
+                        android:id="@+id/month12Expenses"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+
+                    <TextView
+                        android:id="@+id/month12ExtraordinaryIncome"
+                        android:layout_weight="3"
+                        android:gravity="right|center_vertical"
+                        android:paddingRight="8dp" />
+                </TableRow>
+
+            </TableLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

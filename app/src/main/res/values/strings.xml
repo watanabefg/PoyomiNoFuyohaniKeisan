@@ -1,0 +1,16 @@
+<resources>
+    <string name="icon_name">ズボぽよ￥</string>
+    <string name="app_name">ズボラなぽよみの扶養範囲計算</string>
+    <string name="title_home">ホーム</string>
+    <string name="title_input">月給入力</string>
+    <string name="title_record">勤務表（記録）</string>
+    <string name="title_setting">設定</string>
+    <string name="title_setting_price">扶養範囲金額</string>
+
+    <string name="horizontal">Horizontal</string>
+    <string name="vertical">Vertical</string>
+    <string name="single">Single</string>
+    <string name="multiple">Multiple</string>
+    <string name="range">Range</string>
+    <string name="none">None</string>
+</resources>

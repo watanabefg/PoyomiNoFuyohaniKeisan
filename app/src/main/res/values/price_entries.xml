@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="price_entries">
+        <item>100万円</item>
+        <item>103万円</item>
+        <item>130万円</item>
+        <item>150万円</item>
+        <item>201万円</item>
+    </string-array>
+    <string-array name="price_entry_values">
+        <item>1000000</item>
+        <item>1030000</item>
+        <item>1300000</item>
+        <item>1500000</item>
+        <item>2010000</item>
+    </string-array>
+</resources>
