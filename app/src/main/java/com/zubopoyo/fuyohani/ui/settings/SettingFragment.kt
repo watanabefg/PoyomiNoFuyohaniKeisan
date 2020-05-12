@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.Toast
@@ -24,11 +25,21 @@ class SettingFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        settingViewModel =
-                ViewModelProviders.of(this).get(SettingViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_settings, container, false)
         val selectedValues = resources.obtainTypedArray(R.array.price_entry_values)
         val priceSetting = root.findViewById<Spinner>(R.id.price_setting)
+        val myAdapter = priceSetting.adapter
+
+        settingViewModel =
+                ViewModelProviders.of(this).get(SettingViewModel::class.java)
+        settingViewModel.config.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            (0 .. (myAdapter.count-1)).forEach {key ->
+                if (selectedValues.getInt(key, 0) == it.cappedAmount && it.applicableYear == SimpleDateFormat("yyyy").format(Date()).toInt()) {
+                    priceSetting.setSelection(myAdapter.getItemId(key).toInt())
+                }
+            }
+        })
+
         val button = root.findViewById<Button>(R.id.button)
         button.setOnClickListener {
             val cappedAmount = selectedValues.getInt(priceSetting.selectedItemPosition, -1)

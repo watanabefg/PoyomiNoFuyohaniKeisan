@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ConfigRepository(private val configDao: ConfigDao) {
-    val thisConfig: LiveData<Config> = configDao.getConfig(SimpleDateFormat("yyyy").format(Date()).toInt())
+    val thisConfig: LiveData<Config> = configDao.getConfig(SimpleDateFormat("yyyy", Locale.JAPAN).format(Date()).toInt())
 
     suspend fun insert(config: Config) {
         configDao.insert(config)
@@ -15,5 +15,9 @@ class ConfigRepository(private val configDao: ConfigDao) {
 
     suspend fun update(config: Config) {
         configDao.update(config)
+    }
+
+    fun get(thisYear: Int) : LiveData<Config> {
+        return configDao.getConfig(thisYear)
     }
 }

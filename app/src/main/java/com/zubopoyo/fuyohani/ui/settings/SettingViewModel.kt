@@ -34,4 +34,6 @@ class SettingViewModel(application: Application) : AndroidViewModel(application)
         repository.update(config)
     }
 
+
+
 }

@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.zubopoyo.fuyohani.R
+import com.zubopoyo.fuyohani.database.entity.Config
 import com.zubopoyo.fuyohani.database.entity.Salary
 import com.zubopoyo.fuyohani.ui.input.*
 import org.w3c.dom.Text
@@ -47,6 +48,11 @@ class HomeFragment : Fragment() {
                 homePagerAdapter.setYears(years)
             }
         })
+        homeViewModel.config.observe(viewLifecycleOwner, Observer { configs ->
+            configs?.let {
+                homePagerAdapter.setConfigs(it)
+            }
+        })
 
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         return root
@@ -68,6 +74,7 @@ class HomeFragment : Fragment() {
 class HomePagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
     private var salaries = emptyList<Salary>() // Cached copy of salaries
     private var years = mutableListOf<Int>()
+    private lateinit var config : Config
 
     override fun getItem(position: Int): Fragment {
         val fragment = HomeMonthFragment()
@@ -78,7 +85,7 @@ class HomePagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
         var totalSalary = 0
         var totalExpenses = 0
         var totalExtraordinaryIncome = 0
-        var totalBalance = 0
+        var totalBalance: Int
         thisSalaries.forEach {
             totalSalary += it.salary
             totalExpenses += it.expenses
@@ -89,7 +96,7 @@ class HomePagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
                 putInt(ARG_EXTRAORDINARYINCOME + "${it.month}", it.extraordinaryIncome)
             }
         }
-        totalBalance = 1000000 - totalSalary - totalExtraordinaryIncome
+        totalBalance = config.cappedAmount - totalSalary - totalExtraordinaryIncome
         bundle.apply {
             putInt(ARG_TOTAL, totalSalary + totalExpenses + totalExtraordinaryIncome)
             putInt(ARG_TOTALEXPENSES, totalExpenses)
@@ -99,6 +106,11 @@ class HomePagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
         fragment.arguments = bundle
 
         return fragment
+    }
+
+    internal fun setConfigs(config: Config) {
+        this.config = config
+        notifyDataSetChanged()
     }
 
     internal fun setSalaries(salaries: List<Salary>) {
