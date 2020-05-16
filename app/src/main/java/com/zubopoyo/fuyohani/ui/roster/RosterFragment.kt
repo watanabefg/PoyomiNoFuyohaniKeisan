@@ -8,18 +8,37 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
+import android.widget.EditText
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager.widget.ViewPager
 import com.events.calendar.utils.EventsCalendarUtil
 import com.events.calendar.utils.EventsCalendarUtil.MULTIPLE_SELECTION
 import com.events.calendar.views.EventsCalendar
+import com.google.android.material.tabs.TabLayout
 import com.zubopoyo.fuyohani.R
+import com.zubopoyo.fuyohani.database.entity.Event
 import kotlinx.android.synthetic.main.fragment_roster.*
+import java.text.SimpleDateFormat
+import java.time.YearMonth
 import java.util.*
+import java.util.stream.Collectors
+import java.util.stream.Stream
 
 
 class RosterFragment : Fragment(), EventsCalendar.Callback  {
-    //lateinit var calendarView : CalendarView
-    //private val threeMonthsCriteriaList : ArrayList<BaseCriteria> = arrayListOf()
+    // lateinit var calendarView : CalendarView
+    // private val threeMonthsCriteriaList : ArrayList<BaseCriteria> = arrayListOf()
+    // private lateinit var workDayButton : Button
+    // private lateinit var eventsCalendar : EventsCalendar
+    private val events : MutableList<Calendar> = mutableListOf()
+    private lateinit var rosterViewModel: RosterViewModel
+    private lateinit var rosterPagerAdapter: RosterPagerAdapter
+    private lateinit var viewPager: ViewPager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,27 +47,14 @@ class RosterFragment : Fragment(), EventsCalendar.Callback  {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_roster, container, false)
 
-        /*
-        calendarView = root.findViewById(R.id.calendar_view)
-        root.findViewById<Button>(R.id.workdayButton).setOnClickListener {
-            calendarView.selectedDays.forEach {
-                calendarView.selectionManager.toggleDay(it)
-            }
-        }
-        */
-
-        /*
-        val compactCalendarView : CompactCalendarView = root.findViewById(R.id.compactcalendar_view);
-        compactCalendarView.setLocale(TimeZone.getTimeZone("Asia/Tokyo"), Locale.JAPANESE)
-        */
-
         val today = Calendar.getInstance()
         val start = Calendar.getInstance()
         start.add(Calendar.YEAR, -1)
         val end = Calendar.getInstance()
         end.add(Calendar.YEAR, 2)
 
-        val eventsCalendar = root.findViewById<EventsCalendar>(R.id.eventsCalendar)
+        /*
+        eventsCalendar = root.findViewById<EventsCalendar>(R.id.eventsCalendar)
         eventsCalendar.setSelectionMode(MULTIPLE_SELECTION)
             .setToday(today)
             .setMonthRange(start, end)
@@ -57,62 +63,34 @@ class RosterFragment : Fragment(), EventsCalendar.Callback  {
             .setCallback(this)
             .build()
 
-        val calendar = Calendar.getInstance()
-        calendar.clear()
-        calendar.set(2020, 4, 8, 9, 45, 10)
-        eventsCalendar.addEvent(calendar)
-        /*
-        val ev1 = Event(
-            Color.GREEN,
-            calendar.timeInMillis,
-            "Some extra data that I want to store."
-        )*/
-
-        val calendar2 = Calendar.getInstance()
-        calendar2.clear()
-        calendar2.set(2020,4,7,9,10,0)
-        eventsCalendar.addEvent(calendar2)
-
-        /*
-        val ev2 =
-            Event(
-                Color.GREEN,
-                calendar2.timeInMillis
-            )
-        val ev : List<Event> = listOf(ev1, ev2)
-        //compactCalendarView.addEvents(ev)
-        calendarView
+        workDayButton = root.findViewById<Button>(R.id.workdayButton)
          */
 
+        return root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        rosterViewModel = ViewModelProvider(this).get(RosterViewModel::class.java)
 
-        // Query for events on Sun, 07 Jun 2015 GMT.
-        // Time is not relevant when querying for events, since events are returned by day.
-        // So you can pass in any arbitary DateTime and you will receive all events for that day.
-        // Query for events on Sun, 07 Jun 2015 GMT.
-        // Time is not relevant when querying for events, since events are returned by day.
-        // So you can pass in any arbitary DateTime and you will receive all events for that day.
-        //val events: List<Event> =
-        //    compactCalendarView.getEvents(1588736076071L) // can also take a Date object
-        //val events = compactCalendarView.getEventsForMonth(Date())
-
-        // events has size 2 with the 2 events inserted previously
-        //Log.d("testCalendar", "Events: $events")
+        rosterPagerAdapter = RosterPagerAdapter(childFragmentManager)
+        viewPager = view.findViewById(R.id.pager2)
+        viewPager.adapter = rosterPagerAdapter
+        val tabLayout = view.findViewById<TabLayout>(R.id.tab_layout2)
+        tabLayout.setupWithViewPager(viewPager)
+        tabLayout.getTabAt(rosterPagerAdapter.count-1)?.select()
 
         /*
-        threeMonthsCriteriaList.add(CurrentMonthCriteria())
-        threeMonthsCriteriaList.add(NextMonthCriteria())
-        threeMonthsCriteriaList.add(PreviousMonthCriteria())
-
-        if (calendarView.selectionManager is MultipleSelectionManager) {
-            (calendarView.selectionManager as MultipleSelectionManager).addCriteriaList(
-                threeMonthsCriteriaList
-            )
+        workDayButton.setOnClickListener {
+            val dates = eventsCalendar.getDatesFromSelectedRange()
+            dates.forEach{
+                eventsCalendar.addEvent(it)
+                // MEMO: category:0 = workDay
+                val event = Event(it.get(Calendar.YEAR), it.get(Calendar.MONTH), it.get(Calendar.DATE), 0)
+                rosterViewModel.insertEvent(event)
+            }
         }
-        calendarView.update()
-        */
-
-        return root
+         */
     }
 
     override fun onDayLongPressed(selectedDate: Calendar?) {
@@ -127,4 +105,114 @@ class RosterFragment : Fragment(), EventsCalendar.Callback  {
         Log.e("MON", "CHANGED")
     }
 
+}
+
+class RosterPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm)  {
+    private val monthList : MutableList<Calendar> = mutableListOf()
+    init {
+        (-12 .. 1).forEach {
+            val calendar = Calendar.getInstance()
+            calendar.time = Date()
+            calendar.add(Calendar.MONTH, it)
+            monthList.add(calendar)
+        }
+    }
+
+    /**
+     * Return the number of views available.
+     */
+    override fun getCount(): Int = 13
+
+    /**
+     * Return the Fragment associated with a specified position.
+     */
+    override fun getItem(position: Int): Fragment {
+        val fragment = RosterMonthFragment()
+        val bundle = Bundle()
+        bundle.apply {
+            putInt(ARG_YEAR, monthList[position][Calendar.YEAR])
+            putInt(ARG_MONTH, monthList[position][Calendar.MONTH]+1)
+        }
+        fragment.arguments = bundle
+        return fragment
+    }
+
+    override fun getPageTitle(position: Int): CharSequence {
+        return "${monthList[position][Calendar.YEAR]}年${monthList[position][Calendar.MONTH]+1}月"
+    }
+
+}
+
+private const val ARG_YEAR = "year"
+private const val ARG_MONTH = "month"
+
+
+class RosterMonthFragment : Fragment() {
+    private lateinit var rosterViewModel: RosterViewModel
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        rosterViewModel = ViewModelProvider(this).get(RosterViewModel::class.java)
+
+        return inflater.inflate(R.layout.fragment_rostercontents, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        var year = 0
+        var month = 0
+
+        rosterViewModel.allEvents.observe(viewLifecycleOwner, androidx.lifecycle.Observer {events ->
+            val thisEvents = events?.filter {
+                it.year == arguments?.getInt(ARG_YEAR) && it.month == arguments?.getInt(ARG_MONTH)
+            }
+            var timeSummary = 0
+            var feeSummary = 0
+            thisEvents?.forEach {
+                val resViewNameTime = "day" + it.day + "_time"
+                val resViewNameFee = "day" + it.day + "_fee"
+                val editTimeViewId = resources.getIdentifier(resViewNameTime, "id", context?.packageName)
+                val editFeeViewId = resources.getIdentifier(resViewNameFee, "id", context?.packageName)
+                val editTimeView = view.findViewById<EditText>(editTimeViewId)
+                val editFeeView = view.findViewById<CheckBox>(editFeeViewId)
+                editTimeView.setText(it.workinghours.toString())
+                timeSummary += it.workinghours
+                editFeeView.isChecked = it.fee == 1
+                if (it.fee == 1){
+                    feeSummary++
+                }
+            }
+            view.findViewById<TextView>(R.id.feeDayNumber).text = feeSummary.toString()
+            view.findViewById<TextView>(R.id.timeSummary).text = timeSummary.toString()
+
+        })
+
+        val button = view.findViewById<Button>(R.id.saveButton2)
+        button.setOnClickListener {buttonView ->
+            arguments?.takeIf { it.containsKey(ARG_YEAR) }?.apply {
+                year = getInt(ARG_YEAR)
+                month = getInt(ARG_MONTH)
+
+                (1..31).forEach { day ->
+                    val resViewNameTime = "day" + day + "_time"
+                    Log.d("test", resViewNameTime)
+                    val resViewNameFee = "day" + day + "_fee"
+                    val editTimeViewId = resources.getIdentifier(resViewNameTime, "id", context?.packageName)
+                    val editFeeViewId = resources.getIdentifier(resViewNameFee, "id", context?.packageName)
+                    val editTimeView = view.findViewById<EditText>(editTimeViewId)
+                    val editFeeView = view.findViewById<CheckBox>(editFeeViewId)
+
+                    // year, month, day, workinghours, feeを入れる
+                    if (editTimeView.text.toString() != "") {
+                        val workinghours = editTimeView.text.toString().toInt()
+                        val fee = if (editFeeView.isChecked) 1 else 0
+                        val event = Event(year, month, day, workinghours, fee)
+                        rosterViewModel.insertEvent(event)
+                    }
+                }
+            }
+        }
+    }
 }

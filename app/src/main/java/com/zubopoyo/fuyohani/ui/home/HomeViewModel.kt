@@ -27,4 +27,6 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         config = configRepository.thisConfig
     }
 
+
+
 }

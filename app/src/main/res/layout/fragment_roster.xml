@@ -1,65 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    tools:context=".ui.roster.RosterFragment">
 
-    <ScrollView android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="MissingConstraints">
-        <LinearLayout
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/pager2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            tools:ignore="MissingConstraints"
-            android:orientation="vertical">
+            app:tabMode="scrollable" />
 
-            <com.events.calendar.views.EventsCalendar
-                android:id="@+id/eventsCalendar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|center_horizontal"
-                android:background="#ffffff"
-                android:overScrollMode="never"
-                app:datesTextSize="16sp"
-                app:eventDotColor="#49d088"
-                app:isBoldTextOnSelectionEnabled="true"
-                app:monthTitleColor="#222"
-                app:monthTitleTextSize="16sp"
-                app:primaryTextColor="#333333"
-                app:rangeSelectionColor="#F1CE89"
-                app:rangeSelectionEndColor="#F1CE89"
-                app:rangeSelectionStartColor="#F1CE89"
-                app:secondaryTextColor="#999999"
-                app:selectedTextColor="#333333"
-                app:selectionColor="#F1CE89"
-                app:weekHeaderColor="#c6c6c6"
-                app:weekHeaderTextSize="16sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_marginBottom="96dp"
-                >
-
-                <Button
-                    android:id="@+id/workdayButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="勤務日" />
-
-                <Button
-                    android:id="@+id/transportationButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="交通費" />
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+    </androidx.viewpager.widget.ViewPager>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

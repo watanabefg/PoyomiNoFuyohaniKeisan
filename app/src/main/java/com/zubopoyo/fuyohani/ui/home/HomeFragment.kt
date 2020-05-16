@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -32,6 +33,10 @@ class HomeFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
+        val root = inflater.inflate(R.layout.fragment_home, container, false)
+
+        homePagerAdapter = HomePagerAdapter(childFragmentManager)
+
         homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
         homeViewModel.allSalaries.observe(viewLifecycleOwner, Observer { salaries ->
@@ -46,24 +51,19 @@ class HomeFragment : Fragment() {
                 }
                 homePagerAdapter.setSalaries(it)
                 homePagerAdapter.setYears(years)
-            }
-        })
-        homeViewModel.config.observe(viewLifecycleOwner, Observer { configs ->
-            configs?.let {
-                homePagerAdapter.setConfigs(it)
+
+                viewPager = root.findViewById(R.id.pager)
+                viewPager.adapter = homePagerAdapter
+                val tabLayout = root.findViewById<TabLayout>(R.id.tab_layout)
+                tabLayout.setupWithViewPager(viewPager)
+                tabLayout.getTabAt(homePagerAdapter.count-1)?.select()
             }
         })
 
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        homePagerAdapter = HomePagerAdapter(childFragmentManager)
-        viewPager = view.findViewById(R.id.pager)
-        viewPager.adapter = homePagerAdapter
-        val tabLayout = view.findViewById<TabLayout>(R.id.tab_layout)
-        tabLayout.setupWithViewPager(viewPager)
     }
 
 }
@@ -74,7 +74,6 @@ class HomeFragment : Fragment() {
 class HomePagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
     private var salaries = emptyList<Salary>() // Cached copy of salaries
     private var years = mutableListOf<Int>()
-    private lateinit var config : Config
 
     override fun getItem(position: Int): Fragment {
         val fragment = HomeMonthFragment()
@@ -85,7 +84,6 @@ class HomePagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
         var totalSalary = 0
         var totalExpenses = 0
         var totalExtraordinaryIncome = 0
-        var totalBalance: Int
         thisSalaries.forEach {
             totalSalary += it.salary
             totalExpenses += it.expenses
@@ -96,21 +94,15 @@ class HomePagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
                 putInt(ARG_EXTRAORDINARYINCOME + "${it.month}", it.extraordinaryIncome)
             }
         }
-        totalBalance = config.cappedAmount - totalSalary - totalExtraordinaryIncome
+
         bundle.apply {
             putInt(ARG_TOTAL, totalSalary + totalExpenses + totalExtraordinaryIncome)
             putInt(ARG_TOTALEXPENSES, totalExpenses)
             putInt(ARG_TOTALINCOME, totalSalary + totalExtraordinaryIncome)
-            putInt(ARG_TOTALBALANCE, totalBalance)
         }
         fragment.arguments = bundle
 
         return fragment
-    }
-
-    internal fun setConfigs(config: Config) {
-        this.config = config
-        notifyDataSetChanged()
     }
 
     internal fun setSalaries(salaries: List<Salary>) {
@@ -138,7 +130,6 @@ private const val ARG_EXTRAORDINARYINCOME = "extraordinaryIncome"
 private const val ARG_TOTAL = "total"
 private const val ARG_TOTALEXPENSES = "totalexpenses"
 private const val ARG_TOTALINCOME = "totalincome"
-private const val ARG_TOTALBALANCE = "totalbalance"
 
 // Instances of this class are fragments representing a single
 // object in our collection.
@@ -155,34 +146,41 @@ class HomeMonthFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        var totalIncome = 0
         arguments?.takeIf { it.containsKey(ARG_TOTAL) }?.apply {
-            view.findViewById<TextView>(R.id.total).text = getInt(ARG_TOTAL).toString()
+            view.findViewById<TextView>(R.id.total).text = "%,d".format(getInt(ARG_TOTAL))
         }
         arguments?.takeIf { it.containsKey(ARG_TOTALEXPENSES) }?.apply {
-            view.findViewById<TextView>(R.id.totalExpenses).text = getInt(ARG_TOTALEXPENSES).toString()
+            view.findViewById<TextView>(R.id.totalExpenses).text = "%,d".format(getInt(ARG_TOTALEXPENSES))
         }
         arguments?.takeIf { it.containsKey(ARG_TOTALINCOME) }?.apply {
-            view.findViewById<TextView>(R.id.totalIncome).text = getInt(ARG_TOTALINCOME).toString()
+            totalIncome = getInt(ARG_TOTALINCOME)
+            view.findViewById<TextView>(R.id.totalIncome).text = "%,d".format(totalIncome)
         }
-        arguments?.takeIf { it.containsKey(ARG_TOTALBALANCE) }?.apply {
-            view.findViewById<TextView>(R.id.totalBalance).text = getInt(ARG_TOTALBALANCE).toString()
-        }
+        homeViewModel.config.observe(viewLifecycleOwner, Observer {
+            if (it == null) {
+                view.findViewById<TextView>(R.id.totalBalance).text = "%,d".format((0 - totalIncome))
+            } else {
+                view.findViewById<TextView>(R.id.totalBalance).text = "%,d".format((it.cappedAmount - totalIncome))
+            }
+        })
+
         repeat((1..12).count()) {month ->
             arguments?.takeIf { it.containsKey(ARG_SALARY + month) }?.apply {
                 val resViewNameSalary = "month" + month + "Salary"
                 val viewId = resources.getIdentifier(resViewNameSalary, "id", context?.packageName)
                 val monthSalary = view.findViewById<TextView>(viewId)
-                monthSalary.text = getInt(ARG_SALARY + month).toString()
+                monthSalary.text = "%,d".format(getInt(ARG_SALARY + month))
 
                 val resViewNameExpenses = "month" + month + "Expenses"
                 val viewIdExpenses = resources.getIdentifier(resViewNameExpenses, "id", context?.packageName)
                 val monthExpenses = view.findViewById<TextView>(viewIdExpenses)
-                monthExpenses.text = getInt(ARG_EXPENSES + month).toString()
+                monthExpenses.text = "%,d".format(getInt(ARG_EXPENSES + month))
 
                 val resViewNameExtraordinaryIncome = "month" + month + "ExtraordinaryIncome"
                 val viewIdExtraordinaryIncome = resources.getIdentifier(resViewNameExtraordinaryIncome, "id", context?.packageName)
                 val monthExtraordinaryIncome = view.findViewById<TextView>(viewIdExtraordinaryIncome)
-                monthExtraordinaryIncome.text = getInt(ARG_EXTRAORDINARYINCOME + month).toString()
+                monthExtraordinaryIncome.text = "%,d".format(getInt(ARG_EXTRAORDINARYINCOME + month))
             }
         }
     }

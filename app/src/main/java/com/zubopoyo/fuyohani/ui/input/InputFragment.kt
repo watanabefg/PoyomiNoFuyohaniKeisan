@@ -39,12 +39,18 @@ class InputFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
+        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
+        inputPagerAdapter = InputPagerAdapter(childFragmentManager)
         inputViewModel = ViewModelProvider(this).get(InputViewModel::class.java)
         inputViewModel.allSalaries.observe(viewLifecycleOwner, Observer { salaries ->
             salaries?.let { inputPagerAdapter.setSalaries(it) }
-        })
 
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
+            viewPager = root.findViewById(R.id.pager)
+            viewPager.adapter = inputPagerAdapter
+            val tabLayout = root.findViewById<TabLayout>(R.id.tab_layout)
+            tabLayout.setupWithViewPager(viewPager)
+            tabLayout.getTabAt(inputPagerAdapter.count-1)?.select()
+        })
         /*
         val textView: TextView = root.findViewById(R.id.text_dashboard)
 
@@ -56,11 +62,6 @@ class InputFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        inputPagerAdapter = InputPagerAdapter(childFragmentManager)
-        viewPager = view.findViewById(R.id.pager)
-        viewPager.adapter = inputPagerAdapter
-        val tabLayout = view.findViewById<TabLayout>(R.id.tab_layout)
-        tabLayout.setupWithViewPager(viewPager)
     }
 }
 

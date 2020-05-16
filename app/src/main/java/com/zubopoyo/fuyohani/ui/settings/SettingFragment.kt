@@ -33,9 +33,17 @@ class SettingFragment : Fragment() {
         settingViewModel =
                 ViewModelProviders.of(this).get(SettingViewModel::class.java)
         settingViewModel.config.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            (0 .. (myAdapter.count-1)).forEach {key ->
-                if (selectedValues.getInt(key, 0) == it.cappedAmount && it.applicableYear == SimpleDateFormat("yyyy").format(Date()).toInt()) {
-                    priceSetting.setSelection(myAdapter.getItemId(key).toInt())
+            if (it != null) {
+                (0..(myAdapter.count - 1)).forEach { key ->
+                    if (selectedValues.getInt(
+                            key,
+                            0
+                        ) == it.cappedAmount && it.applicableYear == SimpleDateFormat("yyyy").format(
+                            Date()
+                        ).toInt()
+                    ) {
+                        priceSetting.setSelection(myAdapter.getItemId(key).toInt())
+                    }
                 }
             }
         })

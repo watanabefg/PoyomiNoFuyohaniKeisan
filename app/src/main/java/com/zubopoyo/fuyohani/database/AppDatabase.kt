@@ -7,18 +7,21 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.zubopoyo.fuyohani.database.dao.ConfigDao
+import com.zubopoyo.fuyohani.database.dao.EventDao
 import com.zubopoyo.fuyohani.database.dao.SalaryDao
 import com.zubopoyo.fuyohani.database.entity.Config
+import com.zubopoyo.fuyohani.database.entity.Event
 import com.zubopoyo.fuyohani.database.entity.Salary
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
-@Database(entities = [Config::class, Salary::class], version = 2, exportSchema = true)
+@Database(entities = [Config::class, Salary::class, Event::class], version = 4, exportSchema = true)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun configDao(): ConfigDao
     abstract fun salaryDao(): SalaryDao
+    abstract fun eventDao(): EventDao
 
     companion object {
         // Singleton prevents multiple instances of database opening at the same time
@@ -26,6 +29,12 @@ abstract class AppDatabase : RoomDatabase() {
         private var INSTANCE: AppDatabase? = null
 
         val MIGRATION_1_2 = object : Migration(1, 2) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("")
+            }
+        }
+
+        val MIGRATION_2_3 = object : Migration(2, 3) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("")
             }
@@ -45,6 +54,8 @@ abstract class AppDatabase : RoomDatabase() {
                 )
                     .addCallback((AppDatabaseCallback(scope)))
                     .fallbackToDestructiveMigrationFrom(1)
+                    .fallbackToDestructiveMigrationFrom(2)
+                    .fallbackToDestructiveMigrationFrom(3)
                     .build()
                 INSTANCE = instance
                 // return instance
@@ -63,11 +74,13 @@ abstract class AppDatabase : RoomDatabase() {
             INSTANCE?.let { database ->
                 scope.launch {
                     populateDatabase(database.salaryDao())
+                    populateEvent(database.eventDao())
                 }
             }
         }
 
         suspend fun populateDatabase(salaryDao: SalaryDao) {
+            // TODO: リリース前には削除する
             // Delete all content here
             salaryDao.deleteAll()
 
@@ -76,15 +89,30 @@ abstract class AppDatabase : RoomDatabase() {
             salaryDao.insert(salary)
             salary = Salary(2, 2020, 4, 110000, 10000, 0, "")
             salaryDao.insert(salary)
+            salary = Salary(3, 2019, 8, 80000, 10000, 0, "1st")
+            salaryDao.insert(salary)
+
+
+            // 今月分の作成
             val year = SimpleDateFormat("yyyy").format(Date()).toInt()
             val month = SimpleDateFormat("MM").format(Date()).toInt()
 
-            // 今月分の作成
             val thisSalary = salaryDao.getSalary(year, month)
             if (thisSalary == null){
                 val salary = Salary(0, year, month, 0, 0, 0, "")
                 salaryDao.insert(salary)
             }
+        }
+
+        suspend fun populateEvent(eventDao: EventDao) {
+            // TODO: リリース前には削除する
+            eventDao.deleteAll()
+
+            // Add sample event
+            var event = Event(2020, 5, 9, 4,0)
+            eventDao.insert(event)
+            event = Event(2020, 5, 8, 3,1)
+            eventDao.insert(event)
         }
     }
 }
