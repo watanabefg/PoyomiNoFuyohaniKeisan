@@ -7,6 +7,6 @@ data class Event(
     val year: Int,
     val month: Int,
     val day: Int,
-    val workinghours: Int,
+    val workinghours: Float,
     val fee: Int // 0: なし、1:あり
 )

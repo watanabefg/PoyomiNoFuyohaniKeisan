@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
-@Database(entities = [Config::class, Salary::class, Event::class], version = 4, exportSchema = true)
+@Database(entities = [Config::class, Salary::class, Event::class], version = 5, exportSchema = true)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun configDao(): ConfigDao
     abstract fun salaryDao(): SalaryDao
@@ -27,18 +27,6 @@ abstract class AppDatabase : RoomDatabase() {
         // Singleton prevents multiple instances of database opening at the same time
         @Volatile
         private var INSTANCE: AppDatabase? = null
-
-        val MIGRATION_1_2 = object : Migration(1, 2) {
-            override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("")
-            }
-        }
-
-        val MIGRATION_2_3 = object : Migration(2, 3) {
-            override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("")
-            }
-        }
 
         fun getDatabase(context: Context, scope: CoroutineScope): AppDatabase {
             val tempInstance = INSTANCE
@@ -56,6 +44,7 @@ abstract class AppDatabase : RoomDatabase() {
                     .fallbackToDestructiveMigrationFrom(1)
                     .fallbackToDestructiveMigrationFrom(2)
                     .fallbackToDestructiveMigrationFrom(3)
+                    .fallbackToDestructiveMigrationFrom(4)
                     .build()
                 INSTANCE = instance
                 // return instance
@@ -109,9 +98,9 @@ abstract class AppDatabase : RoomDatabase() {
             eventDao.deleteAll()
 
             // Add sample event
-            var event = Event(2020, 5, 9, 4,0)
+            var event = Event(2020, 5, 9, 4f,0)
             eventDao.insert(event)
-            event = Event(2020, 5, 8, 3,1)
+            event = Event(2020, 5, 8, 3f,1)
             eventDao.insert(event)
         }
     }

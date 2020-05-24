@@ -168,7 +168,7 @@ class RosterMonthFragment : Fragment() {
             val thisEvents = events?.filter {
                 it.year == arguments?.getInt(ARG_YEAR) && it.month == arguments?.getInt(ARG_MONTH)
             }
-            var timeSummary = 0
+            var timeSummary = 0f
             var feeSummary = 0
             thisEvents?.forEach {
                 val resViewNameTime = "day" + it.day + "_time"
@@ -206,7 +206,7 @@ class RosterMonthFragment : Fragment() {
 
                     // year, month, day, workinghours, feeを入れる
                     if (editTimeView.text.toString() != "") {
-                        val workinghours = editTimeView.text.toString().toInt()
+                        val workinghours = editTimeView.text.toString().toFloat()
                         val fee = if (editFeeView.isChecked) 1 else 0
                         val event = Event(year, month, day, workinghours, fee)
                         rosterViewModel.insertEvent(event)
