@@ -62,14 +62,13 @@ abstract class AppDatabase : RoomDatabase() {
             super.onOpen(db)
             INSTANCE?.let { database ->
                 scope.launch {
-                    populateDatabase(database.salaryDao())
-                    populateEvent(database.eventDao())
+                    //populateDatabase(database.salaryDao())            // TODO: リリース前には削除する
+                    //populateEvent(database.eventDao())            // TODO: リリース前には削除する
                 }
             }
         }
 
         suspend fun populateDatabase(salaryDao: SalaryDao) {
-            // TODO: リリース前には削除する
             // Delete all content here
             salaryDao.deleteAll()
 
@@ -94,7 +93,6 @@ abstract class AppDatabase : RoomDatabase() {
         }
 
         suspend fun populateEvent(eventDao: EventDao) {
-            // TODO: リリース前には削除する
             eventDao.deleteAll()
 
             // Add sample event
