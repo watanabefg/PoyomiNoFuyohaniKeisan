@@ -18,6 +18,9 @@ interface EventDao {
     @Query("delete from event")
     suspend fun deleteAll()
 
+    @Query("delete from event where year = :thisYear and month = :thisMonth")
+    suspend fun deleteMonth(thisYear: Int, thisMonth: Int)
+
     @Query("select * from event")
     fun getEvents() : LiveData<List<Event>>
 

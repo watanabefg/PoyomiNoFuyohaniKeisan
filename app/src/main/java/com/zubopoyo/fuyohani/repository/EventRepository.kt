@@ -18,4 +18,8 @@ class EventRepository (private val eventDao: EventDao) {
     suspend fun delete(event: Event) {
         eventDao.delete(event)
     }
+
+    suspend fun deleteMonth(year: Int, month:Int) {
+        eventDao.deleteMonth(year, month)
+    }
 }

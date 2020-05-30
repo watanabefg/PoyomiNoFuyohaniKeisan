@@ -26,7 +26,8 @@
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="2dp">
 
                     <TextView
                         android:layout_width="0dp"
@@ -36,7 +37,7 @@
                         android:text="労働時間計(h)"
                         android:textAlignment="center"
                         android:textColor="#fff"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/timeSummary"
@@ -59,7 +60,7 @@
                         android:text="交通費計(d)"
                         android:textAlignment="center"
                         android:textColor="#fff"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/feeDayNumber"
@@ -131,6 +132,7 @@
                         android:layout_gravity="center|center_horizontal"
                         android:layout_weight="1"
                         android:text="1日"
+                        android:textAlignment="center"
                         android:textSize="14sp" />
 
                     <EditText
@@ -165,6 +167,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="2日"
                         android:textSize="14sp" />
                     <EditText
@@ -198,6 +201,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="3日"
                         android:textSize="14sp" />
                     <EditText
@@ -232,6 +236,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="4日"
                         android:textSize="14sp" />
                     <EditText
@@ -265,6 +270,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="5日"
                         android:textSize="14sp" />
                     <EditText
@@ -298,6 +304,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="6日"
                         android:textSize="14sp" />
                     <EditText
@@ -331,6 +338,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="7日"
                         android:textSize="14sp" />
                     <EditText
@@ -365,6 +373,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="8日"
                         android:textSize="14sp" />
                     <EditText
@@ -399,6 +408,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="9日"
                         android:textSize="14sp" />
                     <EditText
@@ -434,6 +444,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="10日"
                         android:textSize="14sp" />
                     <EditText
@@ -469,6 +480,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="11日"
                         android:textSize="14sp" />
                     <EditText
@@ -504,6 +516,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="12日"
                         android:textSize="14sp" />
                     <EditText
@@ -539,6 +552,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="13日"
                         android:textSize="14sp" />
                     <EditText
@@ -574,6 +588,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="14日"
                         android:textSize="14sp" />
                     <EditText
@@ -608,6 +623,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="15日"
                         android:textSize="14sp" />
                     <EditText
@@ -643,6 +659,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="16日"
                         android:textSize="14sp" />
                     <EditText
@@ -677,6 +694,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="17日"
                         android:textSize="14sp" />
                     <EditText
@@ -711,6 +729,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="18日"
                         android:textSize="14sp" />
                     <EditText
@@ -745,6 +764,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="19日"
                         android:textSize="14sp" />
                     <EditText
@@ -779,6 +799,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="20日"
                         android:textSize="14sp" />
                     <EditText
@@ -814,6 +835,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="21日"
                         android:textSize="14sp" />
                     <EditText
@@ -848,6 +870,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="22日"
                         android:textSize="14sp" />
                     <EditText
@@ -882,6 +905,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="23日"
                         android:textSize="14sp" />
                     <EditText
@@ -916,6 +940,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="24日"
                         android:textSize="14sp" />
                     <EditText
@@ -950,6 +975,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="25日"
                         android:textSize="14sp" />
                     <EditText
@@ -984,6 +1010,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="26日"
                         android:textSize="14sp" />
                     <EditText
@@ -1018,6 +1045,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="27日"
                         android:textSize="14sp" />
                     <EditText
@@ -1052,6 +1080,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="28日"
                         android:textSize="14sp" />
                     <EditText
@@ -1086,6 +1115,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="29日"
                         android:textSize="14sp" />
                     <EditText
@@ -1120,6 +1150,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="30日"
                         android:textSize="14sp" />
                     <EditText
@@ -1154,6 +1185,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textAlignment="center"
                         android:text="31日"
                         android:textSize="14sp" />
                     <EditText
@@ -1337,13 +1369,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="64dp"
-        android:gravity="bottom">
+        android:gravity="bottom"
+        android:orientation="horizontal">
+
         <Button
             android:id="@+id/saveButton2"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="保存"
             android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/deleteButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="全て削除"
+            android:textAlignment="center" />
+
     </LinearLayout>
 
 </LinearLayout>

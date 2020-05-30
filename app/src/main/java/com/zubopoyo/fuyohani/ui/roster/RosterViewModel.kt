@@ -24,4 +24,10 @@ class RosterViewModel (application: Application) : AndroidViewModel(application)
             repository.insert(event)
         }
     }
+
+    fun deleteMonth(year: Int, month:Int) {
+        viewModelScope.launch {
+            repository.deleteMonth(year, month)
+        }
+    }
 }

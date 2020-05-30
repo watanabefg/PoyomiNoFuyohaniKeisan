@@ -1,5 +1,6 @@
 package com.zubopoyo.fuyohani.ui.roster
 
+import android.app.AlertDialog
 import android.app.usage.UsageEvents
 import android.graphics.Color
 import android.os.Bundle
@@ -186,8 +187,8 @@ class RosterMonthFragment : Fragment() {
 
         })
 
-        val button = view.findViewById<Button>(R.id.saveButton2)
-        button.setOnClickListener {buttonView ->
+        val savebutton = view.findViewById<Button>(R.id.saveButton2)
+        savebutton.setOnClickListener {buttonView ->
             arguments?.takeIf { it.containsKey(ARG_YEAR) }?.apply {
                 year = getInt(ARG_YEAR)
                 month = getInt(ARG_MONTH)
@@ -215,6 +216,45 @@ class RosterMonthFragment : Fragment() {
                     "保存しました",
                     Toast.LENGTH_LONG
                 ).show()
+            }
+        }
+
+        val deleteButton = view.findViewById<Button>(R.id.deleteButton)
+        deleteButton.setOnClickListener {
+            arguments?.takeIf { it.containsKey(ARG_YEAR) }?.apply {
+                year = getInt(ARG_YEAR)
+                month = getInt(ARG_MONTH)
+
+                AlertDialog.Builder(activity) // FragmentではActivityを取得して生成
+                    .setTitle("データを削除して良いですか？")
+                    .setMessage("${year}年${month}月の勤務表データを削除します。")
+                    .setPositiveButton("はい", { dialog, which ->
+                        // Yesが押された時の挙動
+                        rosterViewModel.deleteMonth(year, month)
+                        // 表示もなくす
+                        (1..31).forEach { day ->
+                            val resViewNameTime = "day" + day + "_time"
+                            val resViewNameFee = "day" + day + "_fee"
+                            val editTimeViewId = resources.getIdentifier(resViewNameTime, "id", context?.packageName)
+                            val editFeeViewId = resources.getIdentifier(resViewNameFee, "id", context?.packageName)
+                            val editTimeView = view.findViewById<EditText>(editTimeViewId)
+                            val editFeeView = view.findViewById<CheckBox>(editFeeViewId)
+                            editTimeView.setText("")
+                            editFeeView.isChecked = false
+                        }
+                        // Toast
+                        Toast.makeText(
+                            context,
+                            "削除しました",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    })
+                    .setNegativeButton("いいえ", { dialog, which ->
+                        // Noが押された時の挙動
+                    })
+                    .show()
+
+
             }
         }
     }
