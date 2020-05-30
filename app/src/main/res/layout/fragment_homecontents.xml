@@ -139,7 +139,11 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="96dp">
 
-                <TableRow>
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
 
                     <TextView
                         android:layout_weight="2"
@@ -166,7 +170,11 @@
                     android:layout_height="2dp"
                     android:background="#999" />
 
-                <TableRow>
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
 
                     <TextView
                         android:layout_weight="2"
@@ -196,7 +204,11 @@
                     android:layout_height="1dp"
                     android:background="#ccc" />
 
-                <TableRow>
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
 
                     <TextView
                         android:layout_weight="2"
@@ -225,7 +237,12 @@
                     android:layout_height="1dp"
                     android:background="#ccc" />
 
-                <TableRow>
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
 
                     <TextView
                         android:layout_weight="2"
@@ -254,7 +271,11 @@
                 <View
                     android:layout_height="1dp"
                     android:background="#ccc" />
-                <TableRow>
+                    <TableRow
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
 
                     <TextView
                         android:layout_weight="2"
@@ -284,7 +305,12 @@
                     android:layout_height="1dp"
                     android:background="#ccc" />
 
-                <TableRow>
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
 
                     <TextView
                         android:layout_weight="2"
@@ -313,8 +339,12 @@
                 <View
                     android:layout_height="1dp"
                     android:background="#ccc" />
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
 
-                <TableRow>
 
                     <TextView
                         android:layout_weight="2"
@@ -344,7 +374,12 @@
                     android:layout_height="1dp"
                     android:background="#ccc" />
 
-                <TableRow>
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
 
                     <TextView
                         android:layout_weight="2"
@@ -374,7 +409,12 @@
                     android:layout_height="1dp"
                     android:background="#ccc" />
 
-                <TableRow>
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
 
                     <TextView
                         android:layout_weight="2"
@@ -404,7 +444,12 @@
                     android:layout_height="1dp"
                     android:background="#ccc" />
 
-                <TableRow>
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
 
                     <TextView
                         android:layout_weight="2"
@@ -434,7 +479,12 @@
                     android:layout_height="1dp"
                     android:background="#ccc" />
 
-                <TableRow>
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
 
                     <TextView
                         android:layout_weight="2"
@@ -464,7 +514,12 @@
                     android:layout_height="1dp"
                     android:background="#ccc" />
 
-                <TableRow>
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
 
                     <TextView
                         android:layout_weight="2"
@@ -494,7 +549,12 @@
                     android:layout_height="1dp"
                     android:background="#ccc" />
 
-                <TableRow>
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
 
                     <TextView
                         android:layout_weight="2"

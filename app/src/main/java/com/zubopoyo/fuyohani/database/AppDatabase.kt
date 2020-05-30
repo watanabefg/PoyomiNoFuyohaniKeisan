@@ -74,10 +74,12 @@ abstract class AppDatabase : RoomDatabase() {
             val year = SimpleDateFormat("yyyy").format(Date()).toInt()
             val month = SimpleDateFormat("MM").format(Date()).toInt()
 
-            val thisSalary = salaryDao.getSalary(year, month)
-            if (thisSalary == null){
-                val salary = Salary(0, year, month, 0, 0, 0, "")
-                salaryDao.insert(salary)
+            (1..month).forEach {
+                val thisSalary = salaryDao.getSalary(year, it)
+                if (thisSalary == null){
+                    val salary = Salary(0, year, it, 0, 0, 0, "")
+                    salaryDao.insert(salary)
+                }
             }
         }
         suspend fun populateDatabase(salaryDao: SalaryDao) {
