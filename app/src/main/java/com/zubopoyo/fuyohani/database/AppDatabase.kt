@@ -63,11 +63,23 @@ abstract class AppDatabase : RoomDatabase() {
             INSTANCE?.let { database ->
                 scope.launch {
                     //populateDatabase(database.salaryDao())            // TODO: リリース前には削除する
+                    initializeSalary(database.salaryDao()) // 今月分の作成
                     //populateEvent(database.eventDao())            // TODO: リリース前には削除する
                 }
             }
         }
 
+        suspend fun initializeSalary(salaryDao: SalaryDao) {
+            // 今月分の作成
+            val year = SimpleDateFormat("yyyy").format(Date()).toInt()
+            val month = SimpleDateFormat("MM").format(Date()).toInt()
+
+            val thisSalary = salaryDao.getSalary(year, month)
+            if (thisSalary == null){
+                val salary = Salary(0, year, month, 0, 0, 0, "")
+                salaryDao.insert(salary)
+            }
+        }
         suspend fun populateDatabase(salaryDao: SalaryDao) {
             // Delete all content here
             salaryDao.deleteAll()
@@ -81,15 +93,6 @@ abstract class AppDatabase : RoomDatabase() {
             salaryDao.insert(salary)
 
 
-            // 今月分の作成
-            val year = SimpleDateFormat("yyyy").format(Date()).toInt()
-            val month = SimpleDateFormat("MM").format(Date()).toInt()
-
-            val thisSalary = salaryDao.getSalary(year, month)
-            if (thisSalary == null){
-                val salary = Salary(0, year, month, 0, 0, 0, "")
-                salaryDao.insert(salary)
-            }
         }
 
         suspend fun populateEvent(eventDao: EventDao) {
