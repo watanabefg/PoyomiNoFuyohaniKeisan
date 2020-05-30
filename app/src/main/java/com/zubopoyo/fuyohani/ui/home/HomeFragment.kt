@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -160,6 +161,13 @@ class HomeMonthFragment : Fragment() {
         homeViewModel.config.observe(viewLifecycleOwner, Observer {
             if (it == null) {
                 view.findViewById<TextView>(R.id.totalBalance).text = "%,d".format((0 - totalIncome))
+                // Toast
+                Toast.makeText(
+                    context,
+                    "設定画面から上限金額を設定してください",
+                    Toast.LENGTH_LONG
+                ).show()
+
             } else {
                 view.findViewById<TextView>(R.id.totalBalance).text = "%,d".format((it.cappedAmount - totalIncome))
             }
