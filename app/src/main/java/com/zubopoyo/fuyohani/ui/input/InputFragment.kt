@@ -127,9 +127,9 @@ class InputMonthFragment : Fragment() {
                 Toast.LENGTH_LONG
             ).show()
 
-            val salary = root.findViewById<EditText>(R.id.editText).text.toString().toInt()
-            val expenses = root.findViewById<EditText>(R.id.editText2).text.toString().toInt()
-            val income = root.findViewById<EditText>(R.id.editText3).text.toString().toInt()
+            val salary = if (root.findViewById<EditText>(R.id.editText).text.toString() == "")  0 else root.findViewById<EditText>(R.id.editText).text.toString().toInt()
+            val expenses = if (root.findViewById<EditText>(R.id.editText2).text.toString() == "") 0 else root.findViewById<EditText>(R.id.editText2).text.toString().toInt()
+            val income = if (root.findViewById<EditText>(R.id.editText3).text.toString() == "") 0 else root.findViewById<EditText>(R.id.editText3).text.toString().toInt()
             val memo : String = root.findViewById<EditText>(R.id.memoText).text.toString()
             arguments?.takeIf { it.containsKey(ARG_SALARY) }?.apply {
                 val updatedSalary = Salary(getInt(ARG_ID), getInt(ARG_YEAR), getInt(ARG_MONTH), salary, expenses, income, memo)
