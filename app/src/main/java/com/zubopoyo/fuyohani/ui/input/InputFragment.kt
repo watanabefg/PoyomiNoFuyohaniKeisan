@@ -42,13 +42,15 @@ class InputFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
         inputPagerAdapter = InputPagerAdapter(childFragmentManager)
         inputViewModel = ViewModelProvider(this).get(InputViewModel::class.java)
+
+        val tabLayout = root.findViewById<TabLayout>(R.id.tab_layout)
+        viewPager = root.findViewById(R.id.pager)
         inputViewModel.allSalaries.observe(viewLifecycleOwner, Observer { salaries ->
             salaries?.let { inputPagerAdapter.setSalaries(it) }
 
-            viewPager = root.findViewById(R.id.pager)
             viewPager.adapter = inputPagerAdapter
-            val tabLayout = root.findViewById<TabLayout>(R.id.tab_layout)
             tabLayout.setupWithViewPager(viewPager)
+
             tabLayout.getTabAt(inputPagerAdapter.count-1)?.select()
         })
         /*
