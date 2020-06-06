@@ -8,20 +8,23 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.zubopoyo.fuyohani.database.dao.ConfigDao
 import com.zubopoyo.fuyohani.database.dao.EventDao
+import com.zubopoyo.fuyohani.database.dao.HourlypayDao
 import com.zubopoyo.fuyohani.database.dao.SalaryDao
 import com.zubopoyo.fuyohani.database.entity.Config
 import com.zubopoyo.fuyohani.database.entity.Event
+import com.zubopoyo.fuyohani.database.entity.Hourlypay
 import com.zubopoyo.fuyohani.database.entity.Salary
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
-@Database(entities = [Config::class, Salary::class, Event::class], version = 5, exportSchema = true)
+@Database(entities = [Config::class, Salary::class, Event::class, Hourlypay::class], version = 7, exportSchema = true)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun configDao(): ConfigDao
     abstract fun salaryDao(): SalaryDao
     abstract fun eventDao(): EventDao
+    abstract fun hourlypayDao(): HourlypayDao
 
     companion object {
         // Singleton prevents multiple instances of database opening at the same time
@@ -45,6 +48,8 @@ abstract class AppDatabase : RoomDatabase() {
                     .fallbackToDestructiveMigrationFrom(2)
                     .fallbackToDestructiveMigrationFrom(3)
                     .fallbackToDestructiveMigrationFrom(4)
+                    .fallbackToDestructiveMigrationFrom(5)
+                    .fallbackToDestructiveMigrationFrom(6)
                     .build()
                 INSTANCE = instance
                 // return instance
@@ -62,9 +67,9 @@ abstract class AppDatabase : RoomDatabase() {
             super.onOpen(db)
             INSTANCE?.let { database ->
                 scope.launch {
-                    //populateDatabase(database.salaryDao())            // TODO: リリース前には削除する
+                    //populateDatabase(database.salaryDao()) // TODO: リリース前には削除する
                     initializeSalary(database.salaryDao()) // 今月分の作成
-                    //populateEvent(database.eventDao())            // TODO: リリース前には削除する
+                    //populateEvent(database.eventDao()) // TODO: リリース前には削除する
                 }
             }
         }
@@ -93,8 +98,6 @@ abstract class AppDatabase : RoomDatabase() {
             salaryDao.insert(salary)
             salary = Salary(3, 2019, 8, 80000, 10000, 0, "1st")
             salaryDao.insert(salary)
-
-
         }
 
         suspend fun populateEvent(eventDao: EventDao) {

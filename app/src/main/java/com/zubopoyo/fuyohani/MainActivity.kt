@@ -11,9 +11,6 @@ import com.zubopoyo.fuyohani.database.AppDatabase
 import com.zubopoyo.fuyohani.ui.input.InputViewModel
 
 class MainActivity : AppCompatActivity() {
-    private val newSalaryActivityRequestCode = 1
-    private lateinit var inputViewModel: InputViewModel
-
     companion object {
         lateinit var database: AppDatabase
     }

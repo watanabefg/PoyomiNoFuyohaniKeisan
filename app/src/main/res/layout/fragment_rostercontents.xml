@@ -33,7 +33,7 @@
                         android:layout_width="0dp"
                         android:layout_height="32dp"
                         android:layout_weight="3"
-                        android:background="#F18989"
+                        android:background="#F1CE89"
                         android:text="労働時間計(h)"
                         android:layout_gravity="center"
                         android:gravity="center"
@@ -52,10 +52,18 @@
                         android:textAlignment="viewEnd"
                          />
 
-                    <View
+                    <EditText
+                        android:id="@+id/hourlypay"
                         android:layout_width="0dp"
-                        android:layout_height="32dp"
-                        android:layout_weight="1" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="3"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="時給"
+                        android:inputType="numberDecimal"
+                        android:textAlignment="viewEnd"
+                        android:textSize="14sp" />
 
                 </TableRow>
 
@@ -67,7 +75,7 @@
                         android:layout_width="0dp"
                         android:layout_height="32dp"
                         android:layout_weight="3"
-                        android:background="#F18989"
+                        android:background="#F1CE89"
                         android:text="交通費計(d)"
                         android:layout_gravity="center"
                         android:gravity="center"
@@ -84,10 +92,49 @@
                         android:gravity="center"
                         android:textAlignment="viewEnd" />
 
-                    <View
+                    <EditText
+                        android:id="@+id/transportation"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="3"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="往復交通費(d)"
+                        android:inputType="numberDecimal"
+                        android:textAlignment="viewEnd"
+                        android:textSize="14sp" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
                         android:layout_width="0dp"
                         android:layout_height="32dp"
-                        android:layout_weight="1" />
+                        android:layout_gravity="center"
+                        android:layout_weight="3"
+                        android:background="#F18989"
+                        android:gravity="center"
+                        android:text="総合計(m)"
+                        android:textAlignment="center"
+                        android:textColor="#fff" />
+
+                    <TextView
+                        android:id="@+id/summary"
+                        android:layout_width="0dp"
+                        android:layout_height="32dp"
+                        android:layout_weight="3"
+                        android:text=""
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textAlignment="center" />
+
+                    <View android:layout_height="32dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="3" />
 
                 </TableRow>
 

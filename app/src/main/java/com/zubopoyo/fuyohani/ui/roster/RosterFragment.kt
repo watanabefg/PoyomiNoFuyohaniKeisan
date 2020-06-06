@@ -20,6 +20,7 @@ import com.events.calendar.views.EventsCalendar
 import com.google.android.material.tabs.TabLayout
 import com.zubopoyo.fuyohani.R
 import com.zubopoyo.fuyohani.database.entity.Event
+import com.zubopoyo.fuyohani.database.entity.Hourlypay
 import kotlinx.android.synthetic.main.fragment_roster.*
 import java.text.SimpleDateFormat
 import java.time.YearMonth
@@ -186,6 +187,19 @@ class RosterMonthFragment : Fragment() {
             view.findViewById<TextView>(R.id.timeSummary).text = timeSummary.toString()
 
         })
+        rosterViewModel.allHourlypay.observe(viewLifecycleOwner, androidx.lifecycle.Observer {hourlypay ->
+            val thisHourlypay = hourlypay?.filter {
+                it.year == arguments?.getInt(ARG_YEAR) && it.month == arguments?.getInt(ARG_MONTH)
+            }
+            thisHourlypay?.forEach {
+                val editHourlypayView = view.findViewById<EditText>(R.id.hourlypay)
+                val editTransportationView = view.findViewById<EditText>(R.id.transportation)
+                val summaryView = view.findViewById<TextView>(R.id.summary)
+                editHourlypayView.setText(it.hourlypay.toString())
+                editTransportationView.setText(it.transportation.toString())
+                summaryView.text = (view.findViewById<TextView>(R.id.feeDayNumber).text.toString().toInt() * it.transportation + view.findViewById<TextView>(R.id.timeSummary).text.toString().toFloat() * it.hourlypay).toInt().toString()
+            }
+        })
 
         val savebutton = view.findViewById<Button>(R.id.saveButton2)
         savebutton.setOnClickListener {buttonView ->
@@ -195,7 +209,6 @@ class RosterMonthFragment : Fragment() {
 
                 (1..31).forEach { day ->
                     val resViewNameTime = "day" + day + "_time"
-                    Log.d("test", resViewNameTime)
                     val resViewNameFee = "day" + day + "_fee"
                     val editTimeViewId = resources.getIdentifier(resViewNameTime, "id", context?.packageName)
                     val editFeeViewId = resources.getIdentifier(resViewNameFee, "id", context?.packageName)
@@ -210,6 +223,15 @@ class RosterMonthFragment : Fragment() {
                         rosterViewModel.insertEvent(event)
                     }
                 }
+
+                // 時給の保存
+                val editHourlypayView = view.findViewById<EditText>(R.id.hourlypay)
+                val editTransportationView = view.findViewById<EditText>(R.id.transportation)
+                if (editHourlypayView.text.toString() != "" && editTransportationView.text.toString() != "") {
+                    val hourlypay = Hourlypay(year, month, editHourlypayView.text.toString().toInt(), editTransportationView.text.toString().toInt())
+                    rosterViewModel.insertHourlypay(hourlypay)
+                }
+
                 // Toast
                 Toast.makeText(
                     context,
