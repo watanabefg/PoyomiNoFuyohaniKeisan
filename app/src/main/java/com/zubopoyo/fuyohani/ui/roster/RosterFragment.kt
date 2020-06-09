@@ -197,7 +197,16 @@ class RosterMonthFragment : Fragment() {
                 val summaryView = view.findViewById<TextView>(R.id.summary)
                 editHourlypayView.setText(it.hourlypay.toString())
                 editTransportationView.setText(it.transportation.toString())
-                summaryView.text = (view.findViewById<TextView>(R.id.feeDayNumber).text.toString().toInt() * it.transportation + view.findViewById<TextView>(R.id.timeSummary).text.toString().toFloat() * it.hourlypay).toInt().toString()
+
+                var feeSummary = 0
+                if (view.findViewById<TextView>(R.id.feeDayNumber).text.toString() != ""){
+                    feeSummary = view.findViewById<TextView>(R.id.feeDayNumber).text.toString().toInt()
+                }
+                var timeSummary = 0f
+                if (view.findViewById<TextView>(R.id.timeSummary).text.toString() != "") {
+                    timeSummary = view.findViewById<TextView>(R.id.timeSummary).text.toString().toFloat()
+                }
+                summaryView.text = (feeSummary * it.transportation + timeSummary * it.hourlypay).toInt().toString()
             }
         })
 
