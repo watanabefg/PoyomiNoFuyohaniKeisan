@@ -206,7 +206,7 @@ class RosterMonthFragment : Fragment() {
                 if (view.findViewById<TextView>(R.id.timeSummary).text.toString() != "") {
                     timeSummary = view.findViewById<TextView>(R.id.timeSummary).text.toString().toFloat()
                 }
-                summaryView.text = (feeSummary * it.transportation + timeSummary * it.hourlypay).toInt().toString()
+                summaryView.text = "%,d".format((feeSummary * it.transportation + timeSummary * it.hourlypay).toInt())
             }
         })
 

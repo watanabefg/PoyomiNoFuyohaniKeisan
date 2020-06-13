@@ -33,23 +33,12 @@
                         android:layout_width="0dp"
                         android:layout_height="32dp"
                         android:layout_weight="3"
-                        android:background="#F1CE89"
-                        android:text="労働時間計(h)"
+                        android:text="時給"
+                        android:background="#F18989"
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:textAlignment="center"
                         android:textColor="#fff"
-                         />
-
-                    <TextView
-                        android:id="@+id/timeSummary"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:textSize="16sp"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:textAlignment="viewEnd"
                          />
 
                     <EditText
@@ -60,7 +49,7 @@
                         android:layout_weight="3"
                         android:ems="10"
                         android:gravity="center"
-                        android:hint="時給"
+                        android:hint="0"
                         android:inputType="numberDecimal"
                         android:textAlignment="viewEnd"
                         android:textSize="14sp" />
@@ -75,22 +64,13 @@
                         android:layout_width="0dp"
                         android:layout_height="32dp"
                         android:layout_weight="3"
-                        android:background="#F1CE89"
-                        android:text="交通費計(d)"
+                        android:background="#F18989"
+                        android:text="往復交通費"
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:textAlignment="center"
                         android:textColor="#fff" />
 
-                    <TextView
-                        android:id="@+id/feeDayNumber"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:textSize="16sp"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:textAlignment="viewEnd" />
 
                     <EditText
                         android:id="@+id/transportation"
@@ -100,7 +80,7 @@
                         android:layout_weight="3"
                         android:ems="10"
                         android:gravity="center"
-                        android:hint="往復交通費(d)"
+                        android:hint="0"
                         android:inputType="numberDecimal"
                         android:textAlignment="viewEnd"
                         android:textSize="14sp" />
@@ -116,9 +96,9 @@
                         android:layout_height="32dp"
                         android:layout_gravity="center"
                         android:layout_weight="3"
-                        android:background="#F18989"
+                        android:background="#F1CE89"
                         android:gravity="center"
-                        android:text="総合計(m)"
+                        android:text="総合計"
                         android:textAlignment="center"
                         android:textColor="#fff" />
 
@@ -130,11 +110,7 @@
                         android:text=""
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:textAlignment="center" />
-
-                    <View android:layout_height="32dp"
-                        android:layout_width="0dp"
-                        android:layout_weight="3" />
+                        android:textAlignment="viewEnd" />
 
                 </TableRow>
 
@@ -1276,6 +1252,43 @@
                 <View
                     android:layout_height="2dp"
                     android:background="#ccc" />
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/daySummary"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="合計"
+                        android:textAlignment="center"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/timeSummary"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/feeDayNumber"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textSize="16sp" />
+
+                </TableRow>
+
             </TableLayout>
 
 
