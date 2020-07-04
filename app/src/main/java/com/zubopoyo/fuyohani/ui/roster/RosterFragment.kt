@@ -52,19 +52,6 @@ class RosterFragment : Fragment(), EventsCalendar.Callback  {
         val end = Calendar.getInstance()
         end.add(Calendar.YEAR, 2)
 
-        /*
-        eventsCalendar = root.findViewById<EventsCalendar>(R.id.eventsCalendar)
-        eventsCalendar.setSelectionMode(MULTIPLE_SELECTION)
-            .setToday(today)
-            .setMonthRange(start, end)
-            .setWeekStartDay(Calendar.SUNDAY, false)
-            .setIsBoldTextOnSelectionEnabled(true)
-            .setCallback(this)
-            .build()
-
-        workDayButton = root.findViewById<Button>(R.id.workdayButton)
-         */
-
         return root
     }
 
@@ -233,13 +220,16 @@ class RosterMonthFragment : Fragment() {
                     }
                 }
 
-                // 時給の保存
                 val editHourlypayView = view.findViewById<EditText>(R.id.hourlypay)
                 val editTransportationView = view.findViewById<EditText>(R.id.transportation)
-                if (editHourlypayView.text.toString() != "" && editTransportationView.text.toString() != "") {
-                    val hourlypay = Hourlypay(year, month, editHourlypayView.text.toString().toInt(), editTransportationView.text.toString().toInt())
-                    rosterViewModel.insertHourlypay(hourlypay)
+                if (editHourlypayView.text.toString() == "") {
+                    editHourlypayView.setText("0")
                 }
+                if (editTransportationView.text.toString() == "") {
+                    editTransportationView.setText("0")
+                }
+                val hourlypay = Hourlypay(year, month, editHourlypayView.text.toString().toInt(), editTransportationView.text.toString().toInt())
+                rosterViewModel.insertHourlypay(hourlypay)
 
                 // Toast
                 Toast.makeText(
@@ -259,7 +249,7 @@ class RosterMonthFragment : Fragment() {
                 AlertDialog.Builder(activity) // FragmentではActivityを取得して生成
                     .setTitle("データを削除して良いですか？")
                     .setMessage("${year}年${month}月の勤務表データを削除します。")
-                    .setPositiveButton("はい", { dialog, which ->
+                    .setPositiveButton("はい") { dialog, which ->
                         // Yesが押された時の挙動
                         rosterViewModel.deleteMonth(year, month)
                         // 表示もなくす
@@ -273,13 +263,19 @@ class RosterMonthFragment : Fragment() {
                             editTimeView.setText("")
                             editFeeView.isChecked = false
                         }
+                        val editHourlypayView = view.findViewById<EditText>(R.id.hourlypay)
+                        editHourlypayView.setText("")
+                        val editTransportationView = view.findViewById<EditText>(R.id.transportation)
+                        editTransportationView.setText("")
+                        val summaryView = view.findViewById<TextView>(R.id.summary)
+                        summaryView.setText("")
                         // Toast
                         Toast.makeText(
                             context,
                             "削除しました",
                             Toast.LENGTH_LONG
                         ).show()
-                    })
+                    }
                     .setNegativeButton("いいえ", { dialog, which ->
                         // Noが押された時の挙動
                     })
