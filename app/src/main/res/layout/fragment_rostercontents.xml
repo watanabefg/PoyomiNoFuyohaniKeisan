@@ -122,7 +122,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:text="※ ズボラなぽよみが作成したため、毎月31日まであります。"
+                android:text="※ ズボラなぽよみが作成したため、毎月31日まであります。総合計が計算されない場合は、一度保存ボタンを押してください。"
                 android:textSize="10sp" />
 
             <TableLayout

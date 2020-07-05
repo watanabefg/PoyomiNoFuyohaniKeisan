@@ -135,6 +135,13 @@ private const val ARG_MONTH = "month"
 
 class RosterMonthFragment : Fragment() {
     private lateinit var rosterViewModel: RosterViewModel
+    private var timeSummary = 0f
+    private var feeSummary = 0
+    private var transportation = 0
+    private var hourlypay = 0
+
+    private var eventsCompleted = false
+    private var hourlypayCompleted = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -150,12 +157,15 @@ class RosterMonthFragment : Fragment() {
         var year = 0
         var month = 0
 
+        // 31日間のデータを反映
         rosterViewModel.allEvents.observe(viewLifecycleOwner, androidx.lifecycle.Observer {events ->
             val thisEvents = events?.filter {
                 it.year == arguments?.getInt(ARG_YEAR) && it.month == arguments?.getInt(ARG_MONTH)
             }
-            var timeSummary = 0f
-            var feeSummary = 0
+
+            timeSummary = 0f
+            feeSummary = 0
+
             thisEvents?.forEach {
                 val resViewNameTime = "day" + it.day + "_time"
                 val resViewNameFee = "day" + it.day + "_fee"
@@ -173,7 +183,10 @@ class RosterMonthFragment : Fragment() {
             view.findViewById<TextView>(R.id.feeDayNumber).text = feeSummary.toString()
             view.findViewById<TextView>(R.id.timeSummary).text = timeSummary.toString()
 
+            eventsCompleted = true
         })
+
+        // 時給と交通費、総合計を反映
         rosterViewModel.allHourlypay.observe(viewLifecycleOwner, androidx.lifecycle.Observer {hourlypay ->
             val thisHourlypay = hourlypay?.filter {
                 it.year == arguments?.getInt(ARG_YEAR) && it.month == arguments?.getInt(ARG_MONTH)
@@ -184,17 +197,21 @@ class RosterMonthFragment : Fragment() {
                 val summaryView = view.findViewById<TextView>(R.id.summary)
                 editHourlypayView.setText(it.hourlypay.toString())
                 editTransportationView.setText(it.transportation.toString())
+                transportation = it.transportation
+                this.hourlypay = it.hourlypay
 
-                var feeSummary = 0
-                if (view.findViewById<TextView>(R.id.feeDayNumber).text.toString() != ""){
-                    feeSummary = view.findViewById<TextView>(R.id.feeDayNumber).text.toString().toInt()
-                }
-                var timeSummary = 0f
-                if (view.findViewById<TextView>(R.id.timeSummary).text.toString() != "") {
-                    timeSummary = view.findViewById<TextView>(R.id.timeSummary).text.toString().toFloat()
-                }
-                summaryView.text = "%,d".format((feeSummary * it.transportation + timeSummary * it.hourlypay).toInt())
+                // FIXME: summaryが計算されない
+                Log.d("テストfee", feeSummary.toString())
+                Log.d("テストtime", timeSummary.toString())
+                Log.d("テストtransportation", it.transportation.toString())
+                Log.d("テストhourlypay", it.hourlypay.toString())
+                val sum = feeSummary * it.transportation + timeSummary * it.hourlypay
+                Log.d("テストsum", sum.toString())
+
+                summaryView.text = "%,d".format(sum.toInt())
             }
+
+            hourlypayCompleted = true
         })
 
         val savebutton = view.findViewById<Button>(R.id.saveButton2)
@@ -276,9 +293,9 @@ class RosterMonthFragment : Fragment() {
                             Toast.LENGTH_LONG
                         ).show()
                     }
-                    .setNegativeButton("いいえ", { dialog, which ->
+                    .setNegativeButton("いいえ") { dialog, which ->
                         // Noが押された時の挙動
-                    })
+                    }
                     .show()
 
 
