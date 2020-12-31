@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.zubopoyo.fuyohani.R
 import com.zubopoyo.fuyohani.database.entity.Config
 import com.zubopoyo.fuyohani.database.entity.Salary
@@ -24,7 +25,6 @@ import com.zubopoyo.fuyohani.ui.input.*
 import org.w3c.dom.Text
 
 class HomeFragment : Fragment() {
-
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var homePagerAdapter: HomePagerAdapter
     private lateinit var viewPager: ViewPager
@@ -173,7 +173,9 @@ class HomeMonthFragment : Fragment() {
             }
         })
 
-        repeat((1..12).count()) {month ->
+        /* repeat((1..12).count()) { month -> */
+        (1..12).forEach { month ->
+            Log.d("テスト", month.toString())
             arguments?.takeIf { it.containsKey(ARG_SALARY + month) }?.apply {
                 val resViewNameSalary = "month" + month + "Salary"
                 val viewId = resources.getIdentifier(resViewNameSalary, "id", context?.packageName)

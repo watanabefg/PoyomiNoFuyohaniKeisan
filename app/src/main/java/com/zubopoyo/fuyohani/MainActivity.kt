@@ -7,10 +7,13 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.zubopoyo.fuyohani.database.AppDatabase
 import com.zubopoyo.fuyohani.ui.input.InputViewModel
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
+
     companion object {
         lateinit var database: AppDatabase
     }
@@ -29,6 +32,8 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+        // Obtain the FirebaseAnalytics instance.
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
     }
 
 }
